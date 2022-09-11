@@ -1,11 +1,14 @@
 const app = require("express")();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const bcryptjs = require("bcryptjs");
 
 const dbConfig = require("./configs/db.config");
 const serverConfig = require("./configs/server.config");
 
 const Movie = require("./models/movie.model");
+const Theatre = require("./models/theatre.model");
+const User = require("./models/user.model");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
@@ -19,11 +22,13 @@ db.on("error", () => {
 });
 db.once("open", () => {
     console.log("Connected to mongoDB.");
-    require("./utils/initialDummyData")(Movie)
+    require("./utils/initialDummyData")(Movie, Theatre, User, bcryptjs);
 });
 
-
+require("./routes/auth.routes")(app);
 require("./routes/movie.routes")(app);
+require('./routes/theatre.routes')(app);
+require('./routes/user.routes')(app);
 
 
 app.listen(serverConfig.PORT, () => {

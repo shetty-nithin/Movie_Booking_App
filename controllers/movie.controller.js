@@ -1,4 +1,5 @@
 const Movie = require("../models/movie.model");
+const Theatre = require("../models/theatre.model");
 
 exports.createMovie = async (req, res) => {
     try{
@@ -16,12 +17,7 @@ exports.createMovie = async (req, res) => {
         }
 
         const createdMovie = await Movie.create(movieObj);
-
-        return res.status(200).send({
-            message : "movie posted successfully",
-            movieId : createdMovie._id,
-            movieObj
-        })
+        return res.status(200).send(createdMovie);
     }
     catch(err){
         return res.status(500).send({
@@ -32,7 +28,7 @@ exports.createMovie = async (req, res) => {
 
 exports.getAllMovies = async (req, res) => {
     try{
-        const movies = await Movie.find({isDeleted : false});
+        const movies = await Movie.find({});
         
         if(!movies){
             return res.status(404).send({
@@ -50,6 +46,7 @@ exports.getAllMovies = async (req, res) => {
 }
 
 exports.getMovieById = async (req, res) => {
+    console.log("till 2")
     try{
         return res.status(200).send(req.movie); // inserted in the "isValiedParamsId" middleware
     }
@@ -92,8 +89,14 @@ exports.updateMovie = async (req, res) => {
 exports.deleteMovie = async (req, res) => {
     try{
         const movie = req.movie; // inserted in the "isValiedParamsId" middleware
-        movie.isDeleted = true;
-        await movie.save();
+        if(movie.theatres.length > 0){
+            movie.theatres.forEach(async theatre => {
+                let temp = await Theatre.findOne({_id : theatre});
+                await temp.movies.remove(movie._id);
+                temp.save();
+            });
+        }
+        await movie.remove();
 
         return res.status(200).send({
             message : `movie ${req.params.id} has been deleted successfully.`

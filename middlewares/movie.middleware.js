@@ -10,25 +10,6 @@ const isValidParamsId = async (req, res, next) => {
                 message : `No such movie with id ${req.params.id} in the database.`
             })
         }
-        next();
-    }
-    catch(err){
-        return res.status(500).send({
-            message : `Internal error : ${err}`
-        })
-    } 
-}
-
-const isDeleted = async (req, res, next) => {
-    try{
-        const movie = await Movie.findOne({_id : req.params.id});
-
-        if(movie.isDeleted == true){
-            return res.status(200).send({
-                message : `Movie with id ${req.params.id} is not available in the theatres anymore.`
-            })
-        }
-
         req.movie = movie;
         next();
     }
@@ -77,4 +58,4 @@ const isValidGenre = async (req, res, next) => {
     } 
 }
 
-module.exports = {isValidParamsId, isDeleted, isValidReleaseStatus, isValidGenre}; 
+module.exports = {isValidParamsId, isValidReleaseStatus, isValidGenre}; 

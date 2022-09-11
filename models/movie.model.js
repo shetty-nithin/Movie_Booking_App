@@ -23,7 +23,7 @@ const movieSchema  = new mongoose.Schema({
         required : true
     },
     language : {
-        type : String,
+        type : [String],
         required : true
     },
     releaseDate :{
@@ -41,9 +41,10 @@ const movieSchema  = new mongoose.Schema({
         type : [ String ],
         enum : [genres.action, genres.fiction, genres.comedy, genres.romcom, genres.drama, genres.scifi, genres.offbeat],
     },
-    isDeleted : {
-        type : Boolean,
-        default : false,
+    theatres : {
+        type : [mongoose.SchemaTypes.ObjectId],
+        default : [],
+        ref : "Theatre"
     },
     createdAt : {
         type : Date,
@@ -55,7 +56,6 @@ const movieSchema  = new mongoose.Schema({
         default : () => Date.now()
     },
 },{ timestamps : true , versionKey : false});
-
 
 
 module.exports = mongoose.model("Movie" , movieSchema);
