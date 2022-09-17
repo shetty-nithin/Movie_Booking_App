@@ -39,6 +39,11 @@ const userSchema = new mongoose.Schema({
         default : [],
         ref : "Theatre"
     },
+    bookings : {
+        type : [mongoose.SchemaTypes.ObjectId],
+        default : [],
+        ref : "Booking"
+    },
     createdAt : {
         type : Date,
         immutable : true,

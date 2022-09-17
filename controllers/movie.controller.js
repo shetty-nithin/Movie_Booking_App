@@ -17,7 +17,7 @@ exports.createMovie = async (req, res) => {
         }
 
         const createdMovie = await Movie.create(movieObj);
-        return res.status(200).send(createdMovie);
+        return res.status(201).send(createdMovie);
     }
     catch(err){
         return res.status(500).send({

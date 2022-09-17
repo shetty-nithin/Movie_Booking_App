@@ -23,7 +23,6 @@ const verifyToken = (req, res, next) => {
         }
         const user = await User.findOne({userId : decoded.id});
         req.user = user;
-        // req.userId = decoded.id;
         next();
     })
 }

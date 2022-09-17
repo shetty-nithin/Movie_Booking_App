@@ -1,12 +1,14 @@
+const { bookingMiddleware } = require("../middlewares");
 const constants = require("./constants");
 
-module.exports = async (Movie, Theatre, User, bcrypt) => {
+module.exports = async (Movie, Theatre, User, Booking, bcrypt) => {
     try {
         
         await Movie.collection.drop();
         await Theatre.collection.drop();
         await User.collection.drop();
-        
+        await Booking.collection.drop();
+
         const adminUser = await User.create({
             name : "admin",
             userId : "admin",
@@ -116,6 +118,34 @@ module.exports = async (Movie, Theatre, User, bcrypt) => {
             showTypes : [constants.showTypes.morning, constants.showTypes.evening],
             numberOfSeats : 300
         });
+
+        const booking1 = await Booking.create({
+            "totalCost" : 550,
+            "theatreId" : theatre1._id,
+            "movieId" : movie1._id,
+            "userId" : "c1",
+            "timing" : Date.now(),
+            "status" : constants.bookingStatus.in_progress,
+            "numberOfSeats" : 2,
+        });
+        const booking2 = await Booking.create({
+            "totalCost" : 270,
+            "theatreId" : theatre3._id,
+            "movieId" : movie2._id,
+            "userId" : "c2",
+            "timing" : Date.now(),
+            "status" : constants.bookingStatus.in_progress,
+            "numberOfSeats" : 1,
+        });
+        const booking3 = await Booking.create({
+            "totalCost" : 870,
+            "theatreId" : theatre3._id,
+            "movieId" : movie2._id,
+            "userId" : "c2",
+            "timing" : Date.now(),
+            "status" : constants.bookingStatus.in_progress,
+            "numberOfSeats" : 3,
+        });
     
 
         movie1.theatres.push(theatre1._id, theatre2._id, theatre3._id);
@@ -137,6 +167,11 @@ module.exports = async (Movie, Theatre, User, bcrypt) => {
         theatreOwner1.theatresOwned.push(theatre1._id);
         await customer1.save();
         theatreOwner2.theatresOwned.push(theatre2._id, theatre3._id, theatre4._id);
+        await customer2.save();
+
+        customer1.bookings.push(booking1._id);
+        await customer1.save();
+        customer2.bookings.push(booking2._id, booking3._id);
         await customer2.save();
     }
     catch (err) {
