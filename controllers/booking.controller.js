@@ -20,13 +20,12 @@ exports.bookTicket = async (req, res) => {
         res.status(201).send(ticketBooked); 
 
         return setTimeout(async () => {
-            const booking = await Booking.findOne({_id : ticketBooked._id});
-            
-            if(booking.status === constants.bookingStatus.in_progress){
-                booking.status = constants.bookingStatus.cancelled;
-                await booking.save();
+            const updatedBooking = await Booking.findOne({_id : ticketBooked._id});
+            if(updatedBooking.status === constants.bookingStatus.in_progress){
+                updatedBooking.status = constants.bookingStatus.cancelled;
+                await updatedBooking.save();
             }
-        }, 30000);
+        }, 120000);
 
     }
     catch(err){

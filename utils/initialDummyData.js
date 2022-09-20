@@ -1,13 +1,14 @@
 const { bookingMiddleware } = require("../middlewares");
 const constants = require("./constants");
 
-module.exports = async (Movie, Theatre, User, Booking, bcrypt) => {
+module.exports = async (Movie, Theatre, User, Booking, Payment, bcrypt) => {
     try {
         
         await Movie.collection.drop();
         await Theatre.collection.drop();
         await User.collection.drop();
         await Booking.collection.drop();
+        await Payment.collection.drop();
 
         const adminUser = await User.create({
             name : "admin",
