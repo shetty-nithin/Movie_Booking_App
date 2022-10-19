@@ -1,6 +1,7 @@
 # Movie Booking Application
 
 [![LinkedIn][linkedin-shield]][linkedin-url]
+
 <br/>
 
 ## About The Project
@@ -9,7 +10,6 @@ This is a simple movie ticket booking application.
 
 ### Moto & Credits :     
 * This application is made as a one of the final project for Bakend Development course by [Relevel](https://relevel.com/home) guided by [Vishwa Mohan](https://www.linkedin.com/in/vishwa-mohan).
-<br/>
 
 ### Features : 
 * Sign up / Sign in 
@@ -22,7 +22,6 @@ This is a simple movie ticket booking application.
 
 * Notification via mail 
 <br/> Sending the mail notification to the user on booking the ticket <br/>  (however, Notification is a different project. You can find that [here](https://github.com/shetty-nithin/Mail_Notification_Application))
-<br/>
 
 ### Built with : 
 
