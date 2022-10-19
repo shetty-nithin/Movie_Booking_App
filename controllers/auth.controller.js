@@ -11,7 +11,7 @@ exports.signup = async (req, res) => {
         req.body.userStatus = constants.userStatus.pending;
     }
 
-    const userObj = { // creating the js object to insert into the DB
+    const userObj = {
         name : req.body.name,
         userId : req.body.userId,
         password : bcrypt.hashSync(req.body.password, 8),
@@ -40,29 +40,30 @@ exports.signin = async (req, res) => {
                 message : "Failed! UserId does not exist in the database"
             })
         }
-    
+        
         if(user.userStatus == constants.userStatus.pending){
             return res.status(400).send({
                 message : "Not yet approved by admin"
             });
         }
-
+        
         const passwordIsValied = bcrypt.compareSync(req.body.password, user.password);
         if(!passwordIsValied){
             return res.status(401).send({
                 message : "Wrong Password"
             })
         }
-    
-        const token = jwt.sign({id : user.userId}, authConfig.SecretKey, {expiresIn : 60000});
-    
+        
+        const accessToken = jwt.sign({id : user.userId}, authConfig.secretKey, {expiresIn : "60m"});
+        
         res.status(200).send({
+            id : user._id,
             name : user.name,
             userId : user.userId,
             email : user.email,
             userType : user.userType,
             userStatus : user.userStatus,
-            accessToken : token
+            accessToken : accessToken,
         });
     }
     catch(err){

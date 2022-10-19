@@ -14,11 +14,11 @@ const verifyToken = (req, res, next) => {
         });
     }
     
-    // Validating for valid token
-    jwt.verify(token, authConfig.SecretKey, async (err, decoded) => {
+    jwt.verify(token, authConfig.secretKey, async (err, decoded) => {
         if(err){
+            
             return res.status(401).send({
-                message : "unauthorized!"
+                message : "unauthorized!",err
             });
         }
         const user = await User.findOne({userId : decoded.id});
@@ -43,6 +43,7 @@ const isValideUserReqParams = async (req, res, next) => {
         })
     }
 }
+
 const isAdmin = (req, res, next) => {
     const user = req.user;
     

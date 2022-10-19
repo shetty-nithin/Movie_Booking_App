@@ -21,7 +21,7 @@ module.exports = async (Movie, Theatre, User, Booking, Payment, bcrypt) => {
             name : "cust1",
             userId : "c1",
             password : bcrypt.hashSync("welcome1", 8),
-            email : "cust1@gmail.com",
+            email : "shettynithin007@gmail.com",
             userType : "CUSTOMER",
         });
         const customer2 = await User.create({

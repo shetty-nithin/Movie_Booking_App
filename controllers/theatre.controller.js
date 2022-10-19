@@ -6,7 +6,7 @@ const constant = require("../utils/constants");
 exports.createTheatre = async (req, res) => {
     try {
         const theatreObj = {
-            ownerId : req.user.userType === constant.userTypes.admin ? req.user.ownerId : req.user._id  ,
+            ownerId : req.body.ownerId,
             name : req.body.name,
             description : req.body.description,
             city : req.body.city,
@@ -14,8 +14,9 @@ exports.createTheatre = async (req, res) => {
             showTypes : req.body.showTypes,
             numberOfSeats : req.body.numberOfSeats
         }
+
         const createdTheatre = await Theatre.create(theatreObj);
-        const theatreOwner = await User.findOne({_id : this.createdTheatre.ownerId});
+        const theatreOwner = await User.findOne({_id : createdTheatre.ownerId});
         
         theatreOwner.theatresOwned.push(createdTheatre._id);
         await theatreOwner.save();

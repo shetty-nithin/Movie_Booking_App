@@ -46,9 +46,8 @@ exports.getAllMovies = async (req, res) => {
 }
 
 exports.getMovieById = async (req, res) => {
-    console.log("till 2")
     try{
-        return res.status(200).send(req.movie); // inserted in the "isValiedParamsId" middleware
+        return res.status(200).send(req.movie);
     }
     catch(err){
         return res.status(500).send({
@@ -59,7 +58,7 @@ exports.getMovieById = async (req, res) => {
 
 exports.updateMovie = async (req, res) => {
     try{
-        const movie = req.movie; // inserted in the "isValiedParamsId" middleware
+        const movie = req.movie;
         movie.name = req.body.name ? req.body.name : movie.name;
         movie.description = req.body.description ? req.body.description : movie.description;
         movie.casts = req.body.casts ? req.body.casts : movie.casts;
@@ -72,7 +71,7 @@ exports.updateMovie = async (req, res) => {
         movie.genre = req.body.genre ? req.body.genre : movie.genre;
 
         const updatedMovie = await movie.save();
-
+ 
         return res.status(200).send({
             message : "movie posted successfully",
             movieId : updatedMovie._id,
@@ -88,7 +87,7 @@ exports.updateMovie = async (req, res) => {
 
 exports.deleteMovie = async (req, res) => {
     try{
-        const movie = req.movie; // inserted in the "isValiedParamsId" middleware
+        const movie = req.movie;
         if(movie.theatres.length > 0){
             movie.theatres.forEach(async theatre => {
                 let temp = await Theatre.findOne({_id : theatre});

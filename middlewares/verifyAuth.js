@@ -3,14 +3,12 @@ const constants = require("../utils/constants");
 
 const validateSignUpRequestBody = async (req, res, next) => {
     
-    // validating whether the name is present or not
     if(!req.body.name){
         return res.status(400).send({
             message : "Please provide the User Name and try again."
         })
     }
     
-    // validating whether the userId is present in the request and the sent userId does not exists already.
     if(!req.body.userId){
         return res.status(400).send({
             message : "Please provid the User Id and try again."
@@ -31,14 +29,12 @@ const validateSignUpRequestBody = async (req, res, next) => {
         });
     }
     
-    // validating whether the password is present or not. 
     if(!req.body.password){
         return res.status(400).send({
             message : "Please provide the password to create the account."
         })
     }
 
-    // validating whether the email id is present or not, sent mail is valid mail or not and the sent email id does not exists already
     if(!req.body.email){
         return res.status(400).send({
             message : "Please provide the email id and try again."
@@ -68,7 +64,6 @@ const validateSignUpRequestBody = async (req, res, next) => {
         });
     }
     
-    // validating whether the userType is present or not and its valid one or not.
     if(req.body.userType == constants.userTypes.admin){
         return res.status(400).send({
             message : "You cannot be admin. You can create an account either as a Customer or as a Engineer."
@@ -86,14 +81,12 @@ const validateSignUpRequestBody = async (req, res, next) => {
 
 const validateSignInRequestBody = (req, res, next) =>{
 
-    // validating whether the userId is present or not.
     if(!req.body.userId){
         return res.status(400).send({
             message : "Please provide the User Id to Sign In."
         })
     }
     
-    // validating whether the password is present or not.
     if(!req.body.password){
         return res.status(400).send({
             message : "Please provide the Password to Sign In."

@@ -2,7 +2,6 @@ const Theatre = require("../models/theatre.model");
 const {showTypes} = require("../utils/constants");
 
 const isValidParamsId = async (req, res, next) => {
-    console.log("till4");
     try {
         const theatre = await Theatre.findOne({_id : req.params.id});
         

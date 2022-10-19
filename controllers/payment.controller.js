@@ -1,31 +1,31 @@
 const Payment = require("../models/payment.model");
 const Booking = require("../models/booking.model");
 const constants = require("../utils/constants");
-
+const mailTypes = require("../utils/mailTypes");
 
 exports.createPayment = async (req, res) => {
     try {
         const paymentObj = {
-            userId : req.user.userId,
             bookingId : req.body.bookingId,
             amount : req.body.amount,
             status : req.body.status,
         }
 
         const paymentPaid = await Payment.create(paymentObj);
-        req.user.payments.push(paymentPaid._id);
-        req.user.save();
+        await req.user.payments.push(paymentPaid._id);
+        await req.user.save();
 
-        const booking = await Booking.findOne({_id : req.body.bookingId});
-        const date = new Date(booking.timing);
-        const milliseconds = date.getTime() + 120000;
-
-        if(Date.now() < milliseconds){
+        const booking = await Booking.findOne({_id : paymentPaid.bookingId});
+        
+        if(paymentPaid.status === constants.paymentStatus.completed){
             booking.status = constants.bookingStatus.completed;
-            await booking.save();
-            paymentPaid.status = constants.paymentStatus.completed;
-            await paymentPaid.save();
+            mailTypes.paymentSuccessfull("shettynithin007@gmail.com", paymentPaid); // this line of code is for sending a notification.
         }
+        else{
+            booking.status = constants.bookingStatus.cancelled;
+            mailTypes.paymentFailed("shettynithin007@gmail.com", paymentPaid); // this line of code is for sending a notification.
+        }
+        await booking.save();
         res.status(201).send(paymentPaid); 
     } 
     catch(err){
@@ -42,12 +42,6 @@ exports.getAllPayment = async (req, res) => {
         if(req.user.userType === constants.userTypes.customer){
             queryObj["_id"] = {$in : req.user.payments};
         }
-        
-        if(!queryObj){
-            return res.status(404).send({
-                message : "No payments yet."
-            })
-        }
 
         const payments = await Payment.find(queryObj);
         return res.status(200).send(payments);
@@ -61,15 +55,7 @@ exports.getAllPayment = async (req, res) => {
 
 exports.getPaymentById = (req, res) => {
     try {
-        const payment = req.payment;
-
-        if(!payment){
-            return res.status(404).send({
-                messaage : "No payment with this Id"
-            })
-        }
-        
-        return res.status(200).send(payment);
+        return res.status(200).send(req.payment);
     }
     catch(err){
         return res.status(500).send({

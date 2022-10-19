@@ -1,5 +1,6 @@
 const Booking = require("../models/booking.model");
 const constants = require("../utils/constants");
+const mailTypes = require("../utils/mailTypes");
 
 exports.bookTicket = async (req, res) => {
     try {
@@ -14,16 +15,19 @@ exports.bookTicket = async (req, res) => {
         }
     
         const ticketBooked = await Booking.create(ticketObj);
-        req.user.bookings.push(ticketBooked._id);
+        await req.user.bookings.push(ticketBooked._id);
         await req.user.save();
 
         res.status(201).send(ticketBooked); 
 
-        return setTimeout(async () => {
+        setTimeout(async () => {
             const updatedBooking = await Booking.findOne({_id : ticketBooked._id});
+            
             if(updatedBooking.status === constants.bookingStatus.in_progress){
                 updatedBooking.status = constants.bookingStatus.cancelled;
                 await updatedBooking.save();
+
+                mailTypes.bookingTimedOut("shettynithin007@gmail.com"); // this line of code is for sending a notification.
             }
         }, 120000);
 
@@ -95,6 +99,12 @@ exports.updateBooking = async (req, res) => {
         booking.numberOfSeats = req.body.numberOfSeats ? req.body.numberOfSeats : booking.numberOfSeats;
 
         const updatedBooking = await booking.save();
+
+        // this line of code is for sending a notification.
+        if(updatedBooking.status === constants.bookingStatus.cancelled){
+            mailTypes.bookingCancelled(req.user.email)
+        }
+        
         return res.status(200).send(updatedBooking);
     }
     catch(err){
