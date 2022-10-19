@@ -1,18 +1,14 @@
 # Movie Booking Application
 
 [![LinkedIn][linkedin-shield]][linkedin-url]
-
-
 <br/>
 
 ## About The Project
 This is a simple movie ticket booking application.
-
 <br/>
 
 ### Moto & Credits :     
 * This application is made as a one of the final project for Bakend Development course by [Relevel](https://relevel.com/home) guided by [Vishwa Mohan](https://www.linkedin.com/in/vishwa-mohan).
-
 <br/>
 
 ### Features : 
@@ -26,7 +22,6 @@ This is a simple movie ticket booking application.
 
 * Notification via mail 
 <br/> Sending the mail notification to the user on booking the ticket <br/>  (however, Notification is a different project. You can find that [here](https://github.com/shetty-nithin/Mail_Notification_Application))
-
 <br/>
 
 ### Built with : 
@@ -36,7 +31,6 @@ This is a simple movie ticket booking application.
 * [![Express.js][Express.js]][Express-url]
 
 * [![Node.js][Node.js]][Node-url]
-
 <br/>
 <br/>
 
@@ -229,20 +223,27 @@ __Installation & Initial Configuration of Mail_Notification_App__
     ```javascript
     node server.js
     ```
-
 <br/>
 <br/>
 
 ## Demo
-#### SignUp and SignIn <br/><br/>
-https://user-images.githubusercontent.com/62413993/196036125-7e9d2731-0d6e-4b9b-8be1-4e9b2ba3e49e.mp4
+#### SignUp and SignIn Operations <br/><br/>
+https://user-images.githubusercontent.com/62413993/196773465-c88c7446-5f6f-4c01-bb11-7524e460d7bc.mp4
 
-#### Ticket <br/><br/>
-https://user-images.githubusercontent.com/62413993/196036140-64ba2242-f7b4-4670-8e56-18380342ac0e.mp4
+#### User Operations <br/><br/>
+https://user-images.githubusercontent.com/62413993/196773565-87cf7009-45c9-47f1-af1f-899b5d7c864c.mp4
 
-#### Admin Operations <br/><br/>
-https://user-images.githubusercontent.com/62413993/196036164-a2e3f474-b18b-4c21-8f8d-83a4a4fb4663.mp4
+#### Theatre Operations <br/><br/>
+https://user-images.githubusercontent.com/62413993/196773694-aee9c7de-727d-41ab-ac5b-14f5c7f4ceb9.mp4
 
+#### Movie Operations <br/><br/>
+https://user-images.githubusercontent.com/62413993/196773773-8cb18a34-8316-48b6-a390-185aa1348b7a.mp4
+
+#### Booking Operations <br/><br/>
+https://user-images.githubusercontent.com/62413993/196773805-bed7f314-ad49-4cdc-9b1f-17349f25ff18.mp4
+
+#### Payment Operations <br/><br/>
+https://user-images.githubusercontent.com/62413993/196773820-f67d1482-b5a6-489e-bf02-550cd55aab7f.mp4
 
 <!-- MARKDOWN LINKS -->
 [forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
