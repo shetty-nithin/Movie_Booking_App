@@ -132,12 +132,12 @@ __Installation & Initial Configuration of Mail_Notification_App__
 
 8. Inside the configs folder create one more file with name "notification.config.js" and write the below code inside it.
     ```javascript
-    if(process.env.NODE_ENv !== "production"){
+    if(process.env.NODE_ENV !== "production"){
     require("dotenv").config();
     }
 
     module.export = {
-        NOTIFICATION_URL: process.env.NOTIFICATION_REST_URL
+        NOTIFICATION_REST_URL : process.env.NOTIFICATION_REST_URL
     }
     ```
 
@@ -149,8 +149,8 @@ __Installation & Initial Configuration of Mail_Notification_App__
     exports.paymentSuccessfull = (recievers, payment) =>{
         sendNotificationReq(
             "Ticket booked successfully!", 
-            recievers, 
             `Rs ${payment.amount} has been deducted from your bank account towards booking movie tickets.`,
+            recievers, 
             "Movie_Booking_App"
         );
     }
@@ -158,8 +158,8 @@ __Installation & Initial Configuration of Mail_Notification_App__
     exports.paymentFailed = (recievers, payment) => {
         sendNotificationReq(
             "Payment failed. Please try again.",
-            recievers,
             `Payment of Rs ${payment.amount} has failed. Please click here ${serverConfig.BOOKING_APP_URL}/mba/api/v1/bookings to book again`,
+            recievers,
             "Movie_Booking_App"
         );
     }
@@ -167,8 +167,8 @@ __Installation & Initial Configuration of Mail_Notification_App__
     exports.bookingCancelled = (recievers) => {
         sendNotificationReq(
             "Booking Cancelled.",
-            recievers,
             `Your booking has been cancelled. Click here ${serverConfig.BOOKING_APP_URL}/mba/api/v1/bookings to book again`,
+            recievers,
             "Movie_Booking_App"
         );
     }
@@ -176,8 +176,8 @@ __Installation & Initial Configuration of Mail_Notification_App__
     exports.bookingTimedOut = (recievers) => {
         sendNotificationReq(
             "Booking Timed out.",
+            `Booking cancelled due to delay in payment. Click here ${serverConfig.BOOKING_APP_URL}/mba/api/v1/bookings to book again.`,
             recievers,
-            `Booking cancelled because due to delay in payment. Click here ${serverConfig.BOOKING_APP_URL}/mba/api/v1/bookings to book again.`,
             "Movie_Booking_App"
         );
     }
@@ -206,7 +206,7 @@ __Installation & Initial Configuration of Mail_Notification_App__
         }
         
         try {
-            client.post(notificationConfig.NOTIFICATION_URL, args, (data, res) => {
+            client.post(notificationConfig.NOTIFICATION_REST_URL, args, (data, res) => {
                 console.log("notification sent!");
             })
         }
