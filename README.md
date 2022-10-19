@@ -15,13 +15,13 @@ This is a simple movie ticket booking application.
 * Sign up / Sign in 
   <br/> A user can create an account as a CUSTOMER or as a THEATRE_OWNER and sign into the account to use the application.
 
-* Create, Read, Update and Delete operations on users, movies, theatres and booking.
+* Create, Read, Update and Delete operations on users, movies, theatres, booking and payment.
 
 * Admin feature
 <br/> Has access to all the operation which a user or a theatre_owner can perform.
 
 * Notification via mail 
-<br/> Sending the mail notification to the user on booking the ticket <br/>  (however, Notification is a different project. You can find that [here](https://github.com/shetty-nithin/Mail_Notification_Application))
+<br/> Sending the mail notification to the user on failure/cancellation/successfull of booking operation. <br/>  (however, Notification is a different project. You can find that [here](https://github.com/shetty-nithin/Mail_Notification_Application))
 
 ### Built with : 
 
